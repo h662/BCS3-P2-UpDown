@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 const GameBoard = () => {
+  const [point, setPoint] = useState(3);
   const [randomNum, setRandomNum] = useState(Math.floor(Math.random() * 100));
   const [choiceNum, setChoiceNum] = useState("");
 
@@ -24,10 +25,18 @@ const GameBoard = () => {
 
     if (randomNum === checkNum) {
       setHint("정답입니다!");
+
+      if (point > 0) {
+        let savedPoint = localStorage.getItem("point");
+
+        localStorage.setItem("point", parseInt(savedPoint) + point);
+      }
     } else if (randomNum > checkNum) {
       setHint(`정답은 ${checkNum}보다 높은 숫자입니다.`);
+      setPoint(point - 1);
     } else if (randomNum < checkNum) {
       setHint(`정답은 ${checkNum}보다 낮은 숫자입니다.`);
+      setPoint(point - 1);
     }
   };
 
@@ -36,6 +45,7 @@ const GameBoard = () => {
     () => console.log(`유저가 선택한 숫자는 ${choiceNum}입니다.`),
     [choiceNum]
   );
+  useEffect(() => console.log(`포인트 : ${point}`), [point]);
 
   return (
     <div className="w-full grow flex flex-col justify-center items-center">
