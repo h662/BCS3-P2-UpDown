@@ -14,10 +14,20 @@ const GameBoard = () => {
 
     if (isNaN(checkNum)) {
       setHint("숫자를 입력해주세요!");
+      return;
     }
 
     if (0 > checkNum || checkNum >= 100) {
       setHint("숫자를 잘못 입력 하였습니다.");
+      return;
+    }
+
+    if (randomNum === checkNum) {
+      setHint("정답입니다!");
+    } else if (randomNum > checkNum) {
+      setHint(`정답은 ${checkNum}보다 높은 숫자입니다.`);
+    } else if (randomNum < checkNum) {
+      setHint(`정답은 ${checkNum}보다 낮은 숫자입니다.`);
     }
   };
 
