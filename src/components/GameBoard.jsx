@@ -24,13 +24,16 @@ const GameBoard = () => {
     }
 
     if (randomNum === checkNum) {
-      setHint("정답입니다!");
+      setHint("정답입니다! 새로운 게임을 시작해보세요!");
 
       if (point > 0) {
         let savedPoint = localStorage.getItem("point");
 
         localStorage.setItem("point", parseInt(savedPoint) + point);
       }
+
+      setPoint(3);
+      setRandomNum(Math.floor(Math.random() * 100));
     } else if (randomNum > checkNum) {
       setHint(`정답은 ${checkNum}보다 높은 숫자입니다.`);
       setPoint(point - 1);
