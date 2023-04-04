@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { AppContext } from "../App";
 
 const GameBoard = () => {
   const [point, setPoint] = useState(3);
@@ -6,6 +7,8 @@ const GameBoard = () => {
   const [choiceNum, setChoiceNum] = useState("");
 
   const [hint, setHint] = useState("0 ~ 100 사이의 숫자를 맞춰보세요!");
+
+  const { myPoint, setMyPoint } = useContext(AppContext);
 
   const onChangeChoice = (e) => {
     setChoiceNum(e.target.value);
@@ -27,9 +30,9 @@ const GameBoard = () => {
       setHint("정답입니다! 새로운 게임을 시작해보세요!");
 
       if (point > 0) {
-        let savedPoint = localStorage.getItem("point");
+        localStorage.setItem("point", parseInt(myPoint) + point);
 
-        localStorage.setItem("point", parseInt(savedPoint) + point);
+        setMyPoint(localStorage.getItem("point"));
       }
 
       setPoint(3);
